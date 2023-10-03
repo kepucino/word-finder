@@ -1,17 +1,63 @@
-const filePath = './assets/slownik/slowa.txt';
-let wordsArray;
+function czyJestSlowem(slowo, litery) {
+  const sumaLiter = {};
+  
+  for (const litera of litery)
+    sumaLiter[litera] = 0;
 
-const letters = ['a', 'a', 'a', 'a', 'a', 'a', 'a'];
+  for (const litera of litery)
+    sumaLiter[litera] += 1;
+  
+  for (const litera of slowo) {
+    if (!sumaLiter[litera])
+      return false;
 
-fetch(filePath)
+    sumaLiter[litera]--;
+  }
+  
+  return true;
+}
+
+function wylosuj(ile) {
+  const alfabet = 'abcdefghijklmnopqrstuvwxyz';
+  let losoweLitery = '';
+
+  for (let i = 0; i < ile; i++) {
+    const losowaLiczba = Math.floor(Math.random() * alfabet.length);
+    losoweLitery += alfabet[losowaLiczba];
+  }
+
+  return losoweLitery;
+}
+
+const slownik = './assets/slownik/slowa.txt';
+var litery = "";
+var slowaZeSlownika;
+
+document.getElementById('button').addEventListener('click', function() {
+  litery = wylosuj(7);
+  
+  document.getElementById("litery").innerText = litery;
+
+  var dobreSlowa = [];
+
+  for (let i=0; i < slowaZeSlownika.length; i++) {
+    let slowo = slowaZeSlownika[i];
+
+    if (czyJestSlowem(slowo, litery))
+    dobreSlowa.push(slowo);
+  }
+
+  document.getElementById("slowa").innerHTML = "";
+  
+  for (let i=0; i < dobreSlowa.length; i++) {
+    console.log(dobreSlowa[i]);
+    document.getElementById("slowa").innerHTML += dobreSlowa[i] + "<br>";
+  }
+});
+
+fetch(slownik)
   .then((res) => res.text())
   .then((text) => {
-    wordsArray = text.split(/\s+/);
-    console.log(wordsArray);
-
-    document.getElementById('word-input').addEventListener('change', function(e) {
-        word = document.getElementById('word-input').value;
-        console.log(word);
-    });
+    slowaZeSlownika = text.split(/\s+/);
    })
   .catch((e) => console.error(e));
