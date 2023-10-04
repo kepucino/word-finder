@@ -36,7 +36,7 @@ var slowaZeSlownika;
 document.getElementById('button').addEventListener('click', function() {
   litery = wylosuj(7);
   
-  document.getElementById("litery").innerText = litery;
+  document.getElementById("litery").innerText = "Wylosowane litery: " + litery;
 
   var dobreSlowa = [];
 
@@ -47,11 +47,11 @@ document.getElementById('button').addEventListener('click', function() {
     dobreSlowa.push(slowo);
   }
 
-  document.getElementById("slowa").innerHTML = "";
+  document.getElementById("slowa").innerHTML = "<b>Słowa możliwe do ułożenia:</b><br>";
   
   for (let i=0; i < dobreSlowa.length; i++) {
     console.log(dobreSlowa[i]);
-    document.getElementById("slowa").innerHTML += dobreSlowa[i] + "<br>";
+    document.getElementById("slowa").innerHTML += `<a href=\"https://sjp.pl/${dobreSlowa[i]}\">${dobreSlowa[i]}</a> `;
   }
 });
 
